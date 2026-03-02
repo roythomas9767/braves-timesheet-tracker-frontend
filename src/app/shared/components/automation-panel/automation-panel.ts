@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { TimesheetService } from '../../../core/services/timesheet';
 import { AutomationLogService, LogEntry, AutomationStatus } from '../../../core/services/automation-log.service';
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-automation-panel',
@@ -93,7 +94,7 @@ export class AutomationPanelComponent implements OnInit, OnDestroy, AfterViewChe
       // have been written by an older buggy version of processPortalRemarks.
       const tsCopy = this.timesheetService.buildCopyWithPortalRemarks(ts);
 
-      const response = await fetch('http://localhost:3000/api/run-automation', {
+      const response = await fetch(`${environment.apiUrl}/run-automation`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(tsCopy)

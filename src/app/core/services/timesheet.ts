@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { DateTime, Settings } from 'luxon';
+import { environment } from '../../../../environments/environment';
 
 // Force English locale for month parsing
 Settings.defaultLocale = 'en';
@@ -42,7 +43,7 @@ export class TimesheetService {
 
   private saveTimer: any = null;
   private isSaving = false;
-  private readonly apiUrl = 'http://localhost:3000/api';
+  private readonly apiUrl = environment.apiUrl;
 
   // Real current month/year (never changes at runtime)
   readonly currentMonthName: string = DateTime.now().toFormat('MMMM');

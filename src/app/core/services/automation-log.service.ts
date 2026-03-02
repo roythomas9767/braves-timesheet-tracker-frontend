@@ -1,6 +1,7 @@
 import { Injectable, OnDestroy, NgZone } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
+import { environment } from '../../../../environments/environment';
 
 export type LogType = 'info' | 'success' | 'warn' | 'error' | 'step';
 export type AutomationStatus = 'idle' | 'running' | 'success' | 'error';
@@ -23,7 +24,7 @@ export class AutomationLogService implements OnDestroy {
      readonly connected$ = new BehaviorSubject<boolean>(false);
 
      constructor(private zone: NgZone) {
-          this.socket = io('http://localhost:3000', { transports: ['websocket', 'polling'] });
+          this.socket = io(environment.socketUrl, { transports: ['websocket', 'polling'] });
 
           this.socket.on('connect', () => {
                this.zone.run(() => {
