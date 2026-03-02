@@ -1,0 +1,50 @@
+<div class="dashboard-layout">
+     <app-sidebar></app-sidebar>
+
+     <main class="main-content">
+          <header class="top-bar glass">
+               <div class="header-title">
+                    <h1>Dashboard</h1>
+                    <p>Manage your daily timesheets and automate submissions</p>
+               </div>
+
+               <div class="stats-container">
+                    <div class="stat-chip hrs">
+                         <span class="label">Actual Worked Hours:</span>
+                         <span class="value">{{ stats.totalHours }}h</span>
+                    </div>
+                    <div class="stat-chip submitted-hrs">
+                         <span class="label">Total Hours To Submit:</span>
+                         <span class="value">{{ stats.totalHoursToSubmit }}h</span>
+                    </div>
+                    <div class="stat-chip leaves">
+                         <span class="label">Leaves:</span>
+                         <span class="value">{{ stats.totalLeaves }}</span>
+                    </div>
+               </div>
+
+               <div class="header-actions">
+                    <div class="date-display">
+                         {{ now | date:'EEEE, MMMM d, y' }}
+                    </div>
+                    <button class="theme-toggle"
+                            (click)="toggleTheme()"
+                            [title]="themeService.isDark() ? 'Switch to Light Mode' : 'Switch to Dark Mode'">
+                         <span class="icon">{{ themeService.isDark() ? '☀️' : '🌙' }}</span>
+                    </button>
+               </div>
+          </header>
+
+          <div class="viewer-section">
+               <app-excel-viewer></app-excel-viewer>
+          </div>
+
+          <div class="automation-section">
+               <app-automation-panel></app-automation-panel>
+          </div>
+
+          <div class="email-section">
+               <app-email-generator></app-email-generator>
+          </div>
+     </main>
+</div>

@@ -1,0 +1,115 @@
+<div class="viewer-container glass">
+     <div class="viewer-header">
+          <div class="title-info">
+               <h3>Timesheet: @if(currentTimesheet) { {{ currentTimesheet.month }} {{ currentTimesheet.year }} } @else { No Selection }</h3>
+               <span class="badge"
+                     [class.editable]="isEditable">
+                    {{ isEditable ? 'Editable' : 'View Only' }}
+               </span>
+               @if (saveStatus === 'saving') {
+               <span class="save-chip saving">⏳ Saving…</span>
+               } @else if (saveStatus === 'saved') {
+               <span class="save-chip saved">✅ Saved</span>
+               }
+          </div>
+
+          <div class="actions"
+               [class.drag-over]="isDragOver"
+               (dragover)="onDragOver($event)"
+               (dragleave)="onDragLeave($event)"
+               (drop)="onDrop($event)">
+               <input type="file"
+                      #fileInput
+                      (change)="onFileSelected($event)"
+                      accept=".xlsx"
+                      style="display: none">
+               <button class="btn-primary"
+                       (click)="fileInput.click()"
+                       [disabled]="!isEditable">
+                    <span class="icon">📁</span> Upload Excel
+               </button>
+               <button class="btn-export"
+                       (click)="exportExcel()"
+                       [disabled]="!currentTimesheet"
+                       title="Export current timesheet as Excel">
+                    <span class="icon">⬇️</span> Export Excel
+               </button>
+               <span class="drag-hint">or drop here</span>
+          </div>
+     </div>
+
+     <div class="content-area">
+          @if (currentTimesheet) {
+          <div class="table-wrapper">
+               <table>
+                    <thead>
+                         <tr>
+                              <th>Day</th>
+                              <th>Date</th>
+                              <th>Time In</th>
+                              <th>Time Out</th>
+                              <th>Total Worked hours from office</th>
+                              <th>Remark</th>
+                         </tr>
+                    </thead>
+                    <tbody>
+                         @for (entry of currentTimesheet.entries; track entry.date) {
+                         <tr [class]="getRowClass(entry)">
+                              <td>{{ entry.day }}</td>
+                              <td>{{ entry.date }}</td>
+                              <td>
+                                   <input class="table-input"
+                                          [(ngModel)]="entry.timeIn"
+                                          (ngModelChange)="onEdit()"
+                                          [disabled]="!isEditable">
+                              </td>
+                              <td>
+                                   <input class="table-input"
+                                          [(ngModel)]="entry.timeOut"
+                                          (ngModelChange)="onEdit()"
+                                          [disabled]="!isEditable">
+                              </td>
+                              <td>
+                                   <div class="hrs-cell">
+                                        <input class="table-input hrs"
+                                               type="number"
+                                               [(ngModel)]="entry.hours"
+                                               (ngModelChange)="onEdit()"
+                                               [disabled]="!isEditable">
+                                        @if (getRowClass(entry).includes('leave-row')) {
+                                        <span class="hrs-hint"
+                                              title="Portal will consider this as 8.0h">⚡8</span>
+                                        }
+                                   </div>
+                              </td>
+                              <td>
+                                   <div class="remark-cell">
+                                        <input class="table-input remark"
+                                               [(ngModel)]="entry.remark"
+                                               (ngModelChange)="onEdit()"
+                                               list="remark-ops"
+                                               [disabled]="!isEditable">
+                                        <datalist id="remark-ops">
+                                             @for (opt of remarkOptions; track opt) {
+                                             <option [value]="opt"></option>
+                                             }
+                                        </datalist>
+                                        @if (getRowClass(entry).includes('leave-row') && entry.portalRemark) {
+                                        <span class="portal-hint"
+                                              [title]="'Portal will use: ' + entry.portalRemark">ℹ️</span>
+                                        }
+                                   </div>
+                              </td>
+                         </tr>
+                         }
+                    </tbody>
+               </table>
+          </div>
+          } @else {
+          <div class="no-selection-state">
+               <div class="icon">📁</div>
+               <p>Please select a month from the sidebar to view timesheet</p>
+          </div>
+          }
+     </div>
+</div>

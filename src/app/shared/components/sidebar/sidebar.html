@@ -1,0 +1,76 @@
+<div class="sidebar-container glass">
+  <div class="sidebar-header">
+    <h2>Timesheet History</h2>
+    <p class="sidebar-subtitle">All months grouped by year</p>
+  </div>
+
+  <div class="history-list">
+
+    @if (isLoading) {
+    <div class="loading-state">
+      <span class="spinner"></span>
+      <span>Loading history...</span>
+    </div>
+    }
+
+    @if (!isLoading && groupedHistory.length === 0) {
+    <div class="empty-state">No timesheet history found.</div>
+    }
+
+    @for (group of groupedHistory; track group.year) {
+    <div class="year-group">
+      <div class="year-label">{{ group.year }}</div>
+
+      @for (item of group.months; track item.month + item.year) {
+      <div class="history-item"
+           [class.is-active]="isSelected(item)"
+           [class.is-submitted]="item.status === 'submitted'"
+           [class.is-pending]="item.status === 'pending'"
+           (click)="selectMonth(item)">
+
+        <!-- Left accent bar -->
+        @if (isSelected(item)) {
+        <div class="active-indicator"></div>
+        }
+
+        <div class="item-content">
+          <div class="month-row">
+            <span class="month-name">{{ shortMonth(item.month) }}</span>
+            @if (item.status === 'active') {
+            <span class="dot dot-active"></span>
+            } @else if (item.status === 'submitted') {
+            <span class="dot dot-submitted"></span>
+            } @else {
+            <span class="dot dot-pending"></span>
+            }
+          </div>
+
+          <div class="badge-row">
+            <span class="badge"
+                  [ngClass]="statusClass(item)">
+              {{ statusLabel(item) }}
+            </span>
+          </div>
+
+          @if (item.status === 'submitted' && item.submittedDate) {
+          <div class="submitted-on">Submitted {{ item.submittedDate }}</div>
+          }
+        </div>
+
+      </div>
+      }
+    </div>
+    }
+
+  </div>
+
+  <div class="sidebar-footer">
+    <div class="user-info">
+      <div class="avatar">SR</div>
+      <div class="details">
+        <span class="name">Sherin Roy</span>
+        <span class="status">V-1.0.0</span>
+      </div>
+    </div>
+  </div>
+</div>

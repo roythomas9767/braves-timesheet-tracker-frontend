@@ -1,0 +1,74 @@
+<div class="panel-container glass">
+
+     <!-- ── Header ── -->
+     <div class="panel-header">
+          <div class="header-left">
+               <h3>Process Control</h3>
+               <div class="conn-badge"
+                    [class.conn-badge--online]="connected"
+                    [class.conn-badge--offline]="!connected">
+                    <span class="conn-dot"></span>
+                    {{ connected ? 'Server Online' : 'Server Offline' }}
+               </div>
+          </div>
+
+          <div class="controls">
+               <button class="btn-run"
+                       [class.btn-run--active]="isProcessing"
+                       [disabled]="isProcessing || !connected"
+                       (click)="startAutomation()">
+                    <span class="btn-icon">{{ isProcessing ? '⏳' : '▶' }}</span>
+                    {{ isProcessing ? 'Running...' : 'Run Automation' }}
+               </button>
+               <button class="btn-secondary"
+                       [disabled]="isProcessing"
+                       (click)="clearLogs()">
+                    🗑 Clear
+               </button>
+          </div>
+     </div>
+
+     <!-- ── Status bar ── -->
+     <div class="status-bar"
+          [class.status-bar--running]="status === 'running'"
+          [class.status-bar--success]="status === 'success'"
+          [class.status-bar--error]="status === 'error'">
+          <div class="status-indicator"
+               [class.active]="status === 'running'"></div>
+          <span class="status-text">{{ statusLabel }}</span>
+          <span class="log-count"
+                *ngIf="logs.length > 0">{{ logs.length }} lines</span>
+     </div>
+
+     <!-- ── Console Box ── -->
+     <div class="console-box">
+          <div class="console-header">
+               <span>Console Output</span>
+               <div class="legend">
+                    <span class="chip chip-step">STEP</span>
+                    <span class="chip chip-ok">OK</span>
+                    <span class="chip chip-warn">WARN</span>
+                    <span class="chip chip-err">ERR</span>
+               </div>
+          </div>
+
+          <div class="logs"
+               #logContainer>
+               @if (logs.length === 0) {
+               <div class="empty-logs">
+                    <span class="empty-icon">🖥️</span>
+                    <span>Ready — click <strong>Run Automation</strong> to begin</span>
+               </div>
+               }
+
+               @for (log of logs; track $index) {
+               <div class="log-entry"
+                    [ngClass]="getLogTypeClass(log.type)">
+                    <span class="ts">{{ log.timestamp }}</span>
+                    <span class="badge">{{ log.type }}</span>
+                    <span class="msg">{{ log.message }}</span>
+               </div>
+               }
+          </div>
+     </div>
+</div>

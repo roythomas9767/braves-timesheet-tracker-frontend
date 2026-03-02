@@ -1,0 +1,357 @@
+/* ─── Panel Container ──────────────────────────────────────────────────────── */
+.panel-container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 10px;
+}
+
+/* ─── Header ───────────────────────────────────────────────────────────────── */
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+  }
+}
+
+/* ─── Connection Badge ─────────────────────────────────────────────────────── */
+.conn-badge {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.7rem;
+  font-weight: 500;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-muted);
+  letter-spacing: 0.3px;
+  transition: all 0.3s;
+
+  .conn-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #475569;
+    transition: background 0.3s;
+  }
+
+  &--online {
+    color: #4ade80;
+    border-color: rgba(74, 222, 128, 0.25);
+    background: rgba(74, 222, 128, 0.08);
+
+    .conn-dot {
+      background: #4ade80;
+      box-shadow: 0 0 6px #4ade80;
+      animation: pulse 1.6s infinite;
+    }
+  }
+
+  &--offline {
+    color: #f87171;
+    border-color: rgba(248, 113, 113, 0.25);
+    background: rgba(248, 113, 113, 0.08);
+
+    .conn-dot {
+      background: #f87171;
+    }
+  }
+}
+
+/* ─── Controls ─────────────────────────────────────────────────────────────── */
+.controls {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.btn-run {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 18px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #6366f1, #8b5cf6);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 0 12px rgba(99, 102, 241, 0.35);
+
+  .btn-icon {
+    font-size: 0.9rem;
+  }
+
+  &:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 18px rgba(99, 102, 241, 0.55);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  &--active {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+    animation: glow-pulse 1.5s infinite;
+  }
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-muted);
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.06);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+/* ─── Status Bar ───────────────────────────────────────────────────────────── */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  transition: all 0.3s;
+
+  &--running {
+    border-color: rgba(245, 158, 11, 0.35);
+    background: rgba(245, 158, 11, 0.06);
+  }
+
+  &--success {
+    border-color: rgba(74, 222, 128, 0.35);
+    background: rgba(74, 222, 128, 0.06);
+  }
+
+  &--error {
+    border-color: rgba(248, 113, 113, 0.35);
+    background: rgba(248, 113, 113, 0.06);
+  }
+}
+
+.status-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #475569;
+  flex-shrink: 0;
+  transition: background 0.3s;
+
+  &.active {
+    background: #f59e0b;
+    box-shadow: 0 0 8px #f59e0b;
+    animation: pulse 1.2s infinite;
+  }
+}
+
+.status-text {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-muted);
+  flex: 1;
+}
+
+.log-count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  opacity: 0.6;
+}
+
+/* ─── Console Box ──────────────────────────────────────────────────────────── */
+.console-box {
+  flex: 1;
+  background: #0d1117;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  font-family: 'Consolas', 'Cascadia Code', 'Monaco', 'Courier New', monospace;
+  min-height: 0;
+}
+
+.console-header {
+  padding: 7px 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.7rem;
+  color: #666;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  flex-shrink: 0;
+}
+
+.legend {
+  display: flex;
+  gap: 5px;
+}
+
+.chip {
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+
+  &-step { background: rgba(96, 165, 250, 0.15); color: #60a5fa; }
+  &-ok   { background: rgba(74, 222, 128, 0.15); color: #4ade80; }
+  &-warn { background: rgba(251, 191, 36, 0.15); color: #fbbf24; }
+  &-err  { background: rgba(248, 113, 113, 0.15); color: #f87171; }
+}
+
+/* ─── Log Scrolling Area ───────────────────────────────────────────────────── */
+.logs {
+  flex: 1;
+  padding: 10px 12px;
+  overflow-y: auto;
+  font-size: 0.77rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(99, 102, 241, 0.4) transparent;
+
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+  &::-webkit-scrollbar-thumb { background: rgba(99, 102, 241, 0.4); border-radius: 2px; }
+}
+
+.empty-logs {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 100%;
+  color: #4a5568;
+  font-size: 0.82rem;
+
+  .empty-icon { font-size: 2rem; opacity: 0.4; }
+}
+
+/* ─── Log Entries ──────────────────────────────────────────────────────────── */
+.log-entry {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  line-height: 1.5;
+  transition: background 0.1s;
+  animation: fadeInUp 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+
+  .ts {
+    color: #3d4451;
+    font-size: 0.68rem;
+    flex-shrink: 0;
+    min-width: 68px;
+  }
+
+  .badge {
+    font-size: 0.6rem;
+    font-weight: 700;
+    padding: 1px 5px;
+    border-radius: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+    flex-shrink: 0;
+  }
+
+  .msg {
+    flex: 1;
+    word-break: break-word;
+    white-space: pre-wrap;
+  }
+
+  /* ── type colours ── */
+  &.log-info {
+    .badge { background: rgba(148, 163, 184, 0.1); color: #94a3b8; }
+    .msg   { color: #94a3b8; }
+  }
+
+  &.log-step {
+    .badge { background: rgba(96, 165, 250, 0.18); color: #60a5fa; }
+    .msg   { color: #bfdbfe; font-weight: 500; }
+  }
+
+  &.log-success {
+    .badge { background: rgba(74, 222, 128, 0.18); color: #4ade80; }
+    .msg   { color: #bbf7d0; }
+  }
+
+  &.log-warn {
+    .badge { background: rgba(251, 191, 36, 0.18); color: #fbbf24; }
+    .msg   { color: #fde68a; }
+  }
+
+  &.log-error {
+    background: rgba(248, 113, 113, 0.05);
+    border-left: 2px solid rgba(248, 113, 113, 0.5);
+    padding-left: 8px;
+    .badge { background: rgba(248, 113, 113, 0.2); color: #f87171; }
+    .msg   { color: #fecaca; }
+  }
+}
+
+/* ─── Animations ───────────────────────────────────────────────────────────── */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.4; }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 12px rgba(245, 158, 11, 0.4); }
+  50%       { box-shadow: 0 0 22px rgba(245, 158, 11, 0.7); }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}

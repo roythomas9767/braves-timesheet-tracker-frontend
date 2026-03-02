@@ -1,0 +1,36 @@
+.email-container {
+     height: 100%;
+     display: flex;
+     flex-direction: column;
+     padding: 16px;
+     gap: 16px;
+}
+
+.email-header {
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+
+     h3 {
+          margin: 0;
+          font-size: 1rem;
+     }
+}
+
+.email-preview {
+     flex: 1;
+     background: rgba(255, 255, 255, 0.03);
+     border-radius: 12px;
+     padding: 16px;
+     overflow-y: auto;
+     border: 1px solid var(--border-color);
+
+     pre {
+          margin: 0;
+          white-space: pre-wrap;
+          font-family: 'Inter', sans-serif;
+          font-size: 0.9rem;
+          line-height: 1.6;
+          color: var(--text-main);
+     }
+}
