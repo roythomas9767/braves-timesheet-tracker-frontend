@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import * as XLSX from 'xlsx';
 import { DateTime, Settings } from 'luxon';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 // Force English locale for month parsing
 Settings.defaultLocale = 'en';

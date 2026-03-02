@@ -1,7 +1,7 @@
 import { Injectable, OnDestroy, NgZone } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
-import { environment } from '../../../../environments/environment';
+import { environment } from '../../../environments/environment';
 
 export type LogType = 'info' | 'success' | 'warn' | 'error' | 'step';
 export type AutomationStatus = 'idle' | 'running' | 'success' | 'error';
